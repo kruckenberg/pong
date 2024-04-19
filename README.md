@@ -1,1 +1,3 @@
-# pygame-starter
+# Pong! (Northridge Remix)
+
+The classic arcade game, Pong.
