@@ -14,7 +14,7 @@ paddle.fill((255, 255, 255))
 paddle_rectangle = paddle.get_rect()
 paddle_rectangle.center = (20, WINDOW_HEIGHT // 2)
 paddle_direction = -1
-paddle_speed = 5
+paddle_speed = 10
 
 while running:
     clock.tick(60)
@@ -22,8 +22,10 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_SPACE:
-                paddle_rectangle.move_ip(0, (paddle_direction * paddle_speed))
+            if event.key == pygame.K_q and paddle_rectangle.top > 0:
+                paddle_rectangle.move_ip(0, -paddle_speed)
+            if event.key == pygame.K_a and paddle_rectangle.bottom < WINDOW_HEIGHT:
+                paddle_rectangle.move_ip(0, paddle_speed)
    
     window.fill((0, 0, 255))
     window.blit(paddle, paddle_rectangle)
