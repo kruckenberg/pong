@@ -14,7 +14,6 @@ score_right = 0
 
 font = pygame.font.Font(None, 64)
 
-
 paddle_left = pygame.Surface((25, 90))
 paddle_left.fill((255, 255, 255))
 paddle_left_rectangle = paddle_left.get_rect()
@@ -44,16 +43,17 @@ while running:
                 paddle_left_rectangle.move_ip(0, -paddle_speed)
             if event.key == pygame.K_a and paddle_left_rectangle.bottom < WINDOW_HEIGHT:
                 paddle_left_rectangle.move_ip(0, paddle_speed)
+            if event.key == pygame.K_UP and paddle_right_rectangle.top > 0:
+                paddle_right_rectangle.move_ip(0, -paddle_speed)
+            if event.key == pygame.K_DOWN and paddle_right_rectangle.bottom < WINDOW_WIDTH:
+                paddle_right_rectangle.move_ip(0, paddle_speed)
    
-
-
-    
+ 
     ball_rectangle.move_ip(2 * ball_x_direction, 2 * ball_y_direction)
     
     if ball_rectangle.colliderect(paddle_left_rectangle) or ball_rectangle.colliderect(paddle_right_rectangle):
         ball_x_direction = ball_x_direction * -1
 
-    # detect wall collision, change y direction
     if ball_rectangle.top <= 0 or ball_rectangle.bottom >= WINDOW_HEIGHT:
         ball_y_direction = ball_y_direction * -1
     
@@ -66,9 +66,11 @@ while running:
         score_left = score_left + 1
 
     scoreboard = font.render(f"{score_left}  - {score_right}", True, (255, 255, 255))
-
+    scoreboard_rectangle = scoreboard.get_rect()
+    scoreboard_rectangle.center = (WINDOW_WIDTH // 2, 30)
+    
     window.fill((0, 0, 255))
-    window.blit(scoreboard, (WINDOW_WIDTH // 2 + 15, 15))
+    window.blit(scoreboard, scoreboard_rectangle)
     window.blit(ball, ball_rectangle)
     window.blit(paddle_left, paddle_left_rectangle)
     window.blit(paddle_right, paddle_right_rectangle)
